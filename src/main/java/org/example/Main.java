@@ -6,11 +6,22 @@ public class Main {
     public static void main(String[] args){
         System.out.println("== 명언 앱 ==");
         Scanner sc= new Scanner(System.in);
-        System.out.print("명령) ");
-        sc.nextLine();
+        String cmd;
+        String wiseSaying="";
+        String author="";
 
-        if(sc.equals("종료")){
-            System.exit(0) ;
+        while(true) {
+            System.out.print("명령) ");
+            cmd=sc.nextLine();
+            if (cmd.equals("종료")) {
+                System.exit(0);
+            } else if (cmd.equals("등록")) {
+                System.out.print("명언 : ");
+                wiseSaying = sc.nextLine();
+                System.out.print("작가 : ");
+                author = sc.nextLine();
+            }
+
         }
     }
 }
