@@ -9,7 +9,7 @@ public class Main {
         String cmd;
         String wiseSaying="";
         String author="";
-        int lastId=1;
+        int lastId=0;
 
         while(true) {
             System.out.print("명령) ");
@@ -21,7 +21,7 @@ public class Main {
                 wiseSaying = sc.nextLine();
                 System.out.print("작가 : ");
                 author = sc.nextLine();
-                System.out.printf("%d번 명언이 등록되었습니다.\n", lastId); //printf 사용
+                System.out.printf("%d번 명언이 등록되었습니다.\n", ++lastId); //printf 사용
 
             }
 
