@@ -31,37 +31,47 @@ public class App {
     private void actionModify(String cmd) {
         String idStr = cmd.split("=")[1];
         int id = Integer.parseInt(idStr);
+        WiseSaying wiseSaying = findById(id);
 
-        boolean rst = modify(id);
-        if(!rst){
+        if(wiseSaying==null){
             System.out.println("%d번 명언은 존재 하지 않습니다.".formatted(id));
             return ;
         }
 
-        System.out.println("%d번 명언이 수정되었습니다.".formatted(id));
+        System.out.println("명언(기존) : %s".formatted(wiseSaying.content));
+        System.out.print("명언 : ");
+        String content=sc.nextLine();
+        System.out.println("작가(기존) : %s".formatted(wiseSaying.author));
+        System.out.print("작가 : ");
+        String author=sc.nextLine();
 
+        modify(wiseSaying, content, author);
     }
 
-    private boolean modify(int modifyTarget) {
-        int foundIndex = -1;
+    private WiseSaying findById(int id) {
+
+        int foundedIndex = findIndexById(id);
+
+        if(foundedIndex == -1) return null;
+
+        return wiseSayings[foundedIndex];
+    }
+
+    private int findIndexById(int id) {
+
         for(int i=0; i<=lastWiseSayingIndex; i++){
             WiseSaying foundedWiseSaying=wiseSayings[i];
-            if(modifyTarget==foundedWiseSaying.id){
-                foundIndex=i;
+            if(id==foundedWiseSaying.id){
+                return i;
             }
         }
 
-        if(foundIndex == -1) return false;
+        return -1;
+    }
 
-        System.out.println("명언(기존) : %s".formatted(wiseSayings[foundIndex].content));
-        System.out.print("명언 : ");
-        wiseSayings[foundIndex].content=sc.nextLine();
-        System.out.println("작가(기존) : %s".formatted(wiseSayings[foundIndex].author));
-        System.out.print("작가 : ");
-        wiseSayings[foundIndex].author=sc.nextLine();
-
-        return true;
-
+    private void modify(WiseSaying wiseSaying, String content, String author) {
+        wiseSaying.content=content;
+        wiseSaying.author=author;
     }
 
     private void actionDelete(String cmd) {
@@ -78,13 +88,7 @@ public class App {
     }
 
     private boolean delete(int deleteTarget) {
-        int foundIndex = -1;
-        for(int i=0; i<=lastWiseSayingIndex; i++){
-            WiseSaying foundedWiseSaying=wiseSayings[i];
-            if(deleteTarget==foundedWiseSaying.id){
-                foundIndex=i;
-            }
-        }
+        int foundIndex = findIndexById(deleteTarget);
 
         if(foundIndex == -1) return false;
 
