@@ -3,10 +3,10 @@ package org.example;
 import java.util.Scanner;
 
 public class App {
-    Scanner sc= new Scanner(System.in);
-    int lastId=0;
-    WiseSaying[] wiseSayings = new WiseSaying[10]; // 객체 한 개 생성은 배열에 안 들어감
-    int lastWiseSayingIndex = -1;
+    private Scanner sc= new Scanner(System.in);
+    private int lastId=0;
+    private WiseSaying[] wiseSayings = new WiseSaying[10]; // 객체 한 개 생성은 배열에 안 들어감
+    private int lastWiseSayingIndex = -1;
 
     public void run(){
         System.out.println("== 명언 앱 ==");
@@ -38,10 +38,10 @@ public class App {
             return ;
         }
 
-        System.out.println("명언(기존) : %s".formatted(wiseSaying.content));
+        System.out.println("명언(기존) : %s".formatted(wiseSaying.getContent()));
         System.out.print("명언 : ");
         String content=sc.nextLine();
-        System.out.println("작가(기존) : %s".formatted(wiseSaying.author));
+        System.out.println("작가(기존) : %s".formatted(wiseSaying.getAuthor()));
         System.out.print("작가 : ");
         String author=sc.nextLine();
 
@@ -61,7 +61,7 @@ public class App {
 
         for(int i=0; i<=lastWiseSayingIndex; i++){
             WiseSaying foundedWiseSaying=wiseSayings[i];
-            if(id==foundedWiseSaying.id){
+            if(id==foundedWiseSaying.getId()){
                 return i;
             }
         }
@@ -70,8 +70,8 @@ public class App {
     }
 
     private void modify(WiseSaying wiseSaying, String content, String author) {
-        wiseSaying.content=content;
-        wiseSaying.author=author;
+        wiseSaying.setContent(content);
+        wiseSaying.setAuthor(author);
     }
 
     private void actionDelete(String cmd) {
@@ -106,7 +106,7 @@ public class App {
         System.out.println("번호 / 작가 / 명언 ");
 
         for(int i=lastWiseSayingIndex;i>=0;i--){
-            System.out.printf("%d / %s / %s\n", wiseSayings[i].id, wiseSayings[i].author,wiseSayings[i].content);
+            System.out.printf("%d / %s / %s\n", wiseSayings[i].getId(), wiseSayings[i].getAuthor(),wiseSayings[i].getContent());
         }
     }
 
@@ -121,16 +121,10 @@ public class App {
     }
 
     private void write(String content, String author){
-        WiseSaying wiseSaying = new WiseSaying();
 
-        wiseSaying.id = ++lastId;
-        wiseSaying.content=content;
-        wiseSaying.author=author;
+        WiseSaying wiseSaying = new WiseSaying(++lastId,content,author);
 
         wiseSayings[++lastWiseSayingIndex]=wiseSaying;
-
     }
-    
-    
 
 }
