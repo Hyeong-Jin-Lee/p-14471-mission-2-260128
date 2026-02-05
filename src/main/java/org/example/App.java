@@ -29,11 +29,17 @@ public class App {
     private void actionDelete(String cmd) {
         String idStr = cmd.split("=")[1];
         int id = Integer.parseInt(idStr);
-        delete(id);
-        System.out.println("1번 명언이 삭제되었습니다.");
+
+        boolean rst = delete(id);
+        if(!rst){
+            System.out.println("해당 명언은 존재 하지 않습니다.");
+            return ;
+        }
+
+        System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
     }
 
-    private void delete(int deleteTarget) {
+    private boolean delete(int deleteTarget) {
         int foundIndex = -1;
         for(int i=0; i<=lastWiseSayingIndex; i++){
             WiseSaying foundedWiseSaying=wiseSayings[i];
@@ -42,13 +48,14 @@ public class App {
             }
         }
 
-        if(foundIndex == -1) return;
+        if(foundIndex == -1) return false;
 
         for(int i=foundIndex;i<lastWiseSayingIndex;i++){
             wiseSayings[i]=wiseSayings[i+1];
         }
 
         lastWiseSayingIndex--; // 목록을 출력할 때
+        return true;
     }
 
 
@@ -68,7 +75,7 @@ public class App {
         String author = sc.nextLine();
 
         write(content, author);
-        System.out.printf("%d번 명언이 등록되었습니다.\n",lastId); //printf 사용
+        System.out.println("%d번 명언이 등록되었습니다.".formatted(lastId)); //printf 사용
     }
 
     private void write(String content, String author){
